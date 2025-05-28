@@ -15,9 +15,9 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_DB: lab2
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: abd_2
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Rbkkth3920
     ports:
       - "5432:5432"
 
@@ -25,8 +25,8 @@ services:
     image: clickhouse/clickhouse-server:latest
     container_name: clickhouse
     ports:
-      - "8123:8123"   # HTTP API
-      - "9000:9000"   # Native client port
+      - "8123:8123"  
+      - "9000:9000"   
     volumes:
       - ./clickhouse_data:/var/lib/clickhouse
     ulimits:
