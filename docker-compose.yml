@@ -1,23 +1,7 @@
 services:
-  clickhouse:
-    image: clickhouse/clickhouse-server:latest
-    container_name: clickhouse
-    ports:
-      - "8123:8123"  
-      - "9000:9000"   
-    volumes:
-      - ./clickhouse_data:/var/lib/clickhouse
-    ulimits:
-      nofile:
-        soft: 262144
-        hard: 262144
-    environment:
-      - CLICKHOUSE_DB=lab2
-      - CLICKHOUSE_USER=user
-      - CLICKHOUSE_PASSWORD=
-      
   spark:
     image: jupyter/pyspark-notebook:latest
+    container_name: spark
     ports:
       - "8888:8888"
       - "4040:4040"
@@ -31,9 +15,27 @@ services:
 
   postgres:
     image: postgres:latest
+    container_name: postgres
     environment:
-      POSTGRES_DB: abd_2
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Rbkkth3920
     ports:
       - "5432:5432"
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123"   
+      - "9000:9000"  
+    volumes:
+      - ./clickhouse_data:/var/lib/clickhouse
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    environment:
+      - CLICKHOUSE_DB=postgres
+      - CLICKHOUSE_USER=user
+      - CLICKHOUSE_PASSWORD=
