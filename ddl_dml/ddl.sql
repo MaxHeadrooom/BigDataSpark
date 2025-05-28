@@ -45,7 +45,7 @@ CREATE TABLE dim_supplier (
 
 CREATE TABLE dim_store (
     store_id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
+    store_name VARCHAR(100),
     location VARCHAR(100),
     city VARCHAR(50),
     state VARCHAR(50),
