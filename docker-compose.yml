@@ -1,0 +1,39 @@
+services:
+  spark:
+    image: jupyter/pyspark-notebook:latest
+    ports:
+      - "8888:8888"
+      - "4040:4040"
+    environment:
+      - PYSPARK_PYTHON=python3
+      - PYSPARK_DRIVER_PYTHON=jupyter
+      - PYSPARK_DRIVER_PYTHON_OPTS=notebook --NotebookApp.token='' --NotebookApp.password=''
+      - PYSPARK_SUBMIT_ARGS=--packages org.postgresql:postgresql:42.2.27,com.clickhouse:clickhouse-jdbc:0.4.6,org.mongodb.spark:mongo-spark-connector_2.12:10.1.1 pyspark-shell
+    volumes:
+      - ./notebook:/home/jovyan/work
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: lab2
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123"   # HTTP API
+      - "9000:9000"   # Native client port
+    volumes:
+      - ./clickhouse_data:/var/lib/clickhouse
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    environment:
+      - CLICKHOUSE_DB=lab2
+      - CLICKHOUSE_USER=user
+      - CLICKHOUSE_PASSWORD=
